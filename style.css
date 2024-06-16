@@ -1,0 +1,101 @@
+@font-face {
+    font-family: 'Digital-7 Mono';
+    src: url('digital7mono.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(142, 208, 235);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto Mono', sans-serif;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 365px;
+    height: calc(420px + 150px + 30px + 5px);
+    padding: 15px;
+    background-color: rgb(0, 126, 253);
+    border-radius: 10px;
+    box-shadow: 0px 15px 20px 3px rgb(70, 88, 105);
+}
+
+.screen {
+    width: 335px;
+    height: 150px;
+    border: 5px solid #98ade0;
+    border-radius: 7px;
+    background-color: rgb(193, 220, 231);
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    width: 335px;
+    height: 420px;
+}
+
+.button {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: #b6c8f4;
+    border-style: solid;
+    border-width: 3px 7px 10px;
+    border-color: #f1f2fa #98ade0 #809ceb;
+    border-radius: 7px;
+    color: #3f4149;
+    transition: 0.3s ease;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:active {
+    background-color: rgb(193, 220, 231);
+    transform: scale(0.9);
+}
+
+.all-clear, .clear {
+    background-color: rgb(193, 220, 231);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 60px;
+    font-size: 0.8em;
+    color: #3f4149;
+}
+
+.github {
+    margin-right: -15px;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
