@@ -42,6 +42,24 @@ body {
     background-color: rgb(193, 220, 231);
 }
 
+.screen-up {
+    width: calc(335px - 10px);
+    height: 49.5px;
+    margin: 5px 5px 0;
+    font-size: 1.5em;
+    font-family: 'Digital-7 Mono';
+    word-wrap: break-word;
+}
+
+.screen-down {
+    width: calc(335px - 10px);
+    height: 82.5px;
+    margin: 5px;
+    font-size: 2.5em;
+    font-family: 'Digital-7 Mono';
+    word-wrap: break-word;
+}
+
 .buttons {
     display: flex;
     justify-content: space-between;
