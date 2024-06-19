@@ -27,6 +27,9 @@ function handleDigit(target) {
     if(firstOperand === ''){
         displayUp.textContent = '';
         displayDown.textContent = '';
+        operator = '';
+        result = '';
+        secondOperand = '';
     }
     if(operator === '' || operator === '=') {
         firstOperand += target.textContent;
