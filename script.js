@@ -14,18 +14,25 @@ input.addEventListener('click', (event) => {
         handleDigit(target);
     } else if(classList.contains('operator')) {
         handleOperator(target);
-    } else {
+    } else if(classList.contains('point')) {
         handlePoint(target);
+    } else if(classList.contains('clear')) {
+        clearButton();
+    } else if(classList.contains('all-clear')) {
+        allClearButton();
     }
 });
 
 function handleDigit(target) {
-    if(operator === '') {
+    if(firstOperand === ''){
+        displayUp.textContent = '';
+        displayDown.textContent = '';
+    }
+    if(operator === '' || operator === '=') {
         firstOperand += target.textContent;
         displayUp.textContent += target.textContent;
         displayDown.textContent += target.textContent;
-    }
-    else {
+    } else {
         secondOperand += target.textContent;
         displayUp.textContent += target.textContent;
         displayDown.textContent = target.textContent;
@@ -42,18 +49,21 @@ function handleOperator(target) {
                 displayUp.textContent += '=' + result;
                 displayDown.textContent = result;
                 operator = newOperator;
+                firstOperand = '';
                 break;
             case '-': 
                 result = Number(firstOperand) - Number(secondOperand);
                 displayUp.textContent += '=' + result;
                 displayDown.textContent = result;
                 operator = newOperator;
+                firstOperand = '';
                 break;
             case 'x':
                 result = Number(firstOperand) * Number(secondOperand);
                 displayUp.textContent += '=' + result;
                 displayDown.textContent = result;
                 operator = newOperator;
+                firstOperand = '';
                 break;
             case '/':
                 result = Number(firstOperand) / Number(secondOperand);
@@ -61,6 +71,7 @@ function handleOperator(target) {
                 displayUp.textContent += '=' + result;
                 displayDown.textContent = result;
                 operator = newOperator;
+                firstOperand = '';
                 break;
         }
     } else if(newOperator === '+') {
@@ -244,4 +255,13 @@ function handleOperator(target) {
 
 function roundToDecimalPlace(number, decimalPlaces) {
     return Number(number.toFixed(decimalPlaces));
+}
+
+function allClearButton() {
+    result = '';
+    firstOperand = '';
+    secondOperand = '';
+    operator = '';
+    displayDown.textContent = '';
+    displayUp.textContent = '';
 }
