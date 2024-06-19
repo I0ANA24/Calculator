@@ -99,7 +99,7 @@ function handleOperator(target) {
                 displayUp.textContent = firstOperand + '+';
                 operator = newOperator;
                 break;
-            case '*':
+            case 'x':
                 result = Number(firstOperand) * Number(secondOperand);
                 firstOperand = result;
                 secondOperand = '';
@@ -143,7 +143,7 @@ function handleOperator(target) {
                 displayUp.textContent = firstOperand + '-';
                 operator = newOperator;
                 break;
-            case '*':
+            case 'x':
                 result = Number(firstOperand) * Number(secondOperand);
                 firstOperand = result;
                 secondOperand = '';
@@ -187,7 +187,7 @@ function handleOperator(target) {
                 displayUp.textContent = firstOperand + '*';
                 operator = newOperator;
                 break;
-            case '*':
+            case 'x':
                 result = Number(firstOperand) * Number(secondOperand);
                 firstOperand = result;
                 secondOperand = '';
@@ -195,7 +195,7 @@ function handleOperator(target) {
                 operator = newOperator;
                 break;
         }
-    }   else if(newOperator === '/') {
+    } else if(newOperator === '/') {
         switch(operator) {
             case '':
                 if(firstOperand && secondOperand === '') {
@@ -231,7 +231,7 @@ function handleOperator(target) {
                 displayUp.textContent = firstOperand + '/';
                 operator = newOperator;
                 break;
-            case '*':
+            case 'x':
                 result = Number(firstOperand) * Number(secondOperand);
                 firstOperand = result;
                 secondOperand = '';
