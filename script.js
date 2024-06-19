@@ -37,20 +37,18 @@ function handleOperator(target) {
 
     if(newOperator === '=') {
         switch(operator) {
-            case '+': {
+            case '+': 
                 result = Number(firstOperand) + Number(secondOperand);
                 displayUp.textContent += '=' + result;
                 displayDown.textContent = result;
                 operator = newOperator;
                 break;
-            }
-            case '-': {
+            case '-': 
                 result = Number(firstOperand) - Number(secondOperand);
                 displayUp.textContent += '=' + result;
                 displayDown.textContent = result;
                 operator = newOperator;
                 break;
-            }
             case 'x':
                 result = Number(firstOperand) * Number(secondOperand);
                 displayUp.textContent += '=' + result;
@@ -59,6 +57,7 @@ function handleOperator(target) {
                 break;
             case '/':
                 result = Number(firstOperand) / Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
                 displayUp.textContent += '=' + result;
                 displayDown.textContent = result;
                 operator = newOperator;
@@ -94,6 +93,7 @@ function handleOperator(target) {
                 break;
             case '/':
                 result = Number(firstOperand) / Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
                 firstOperand = result;
                 secondOperand = '';
                 displayUp.textContent = firstOperand + '+';
@@ -137,6 +137,7 @@ function handleOperator(target) {
                 break;
             case '/':
                 result = Number(firstOperand) / Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
                 firstOperand = result;
                 secondOperand = '';
                 displayUp.textContent = firstOperand + '-';
@@ -180,6 +181,7 @@ function handleOperator(target) {
                 break;
             case '/':
                 result = Number(firstOperand) / Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
                 firstOperand = result;
                 secondOperand = '';
                 displayUp.textContent = firstOperand + '*';
@@ -223,6 +225,7 @@ function handleOperator(target) {
                 break;
             case '/':
                 result = Number(firstOperand) / Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
                 firstOperand = result;
                 secondOperand = '';
                 displayUp.textContent = firstOperand + '/';
@@ -237,4 +240,8 @@ function handleOperator(target) {
                 break;
         }
     }
+}
+
+function roundToDecimalPlace(number, decimalPlaces) {
+    return Number(number.toFixed(decimalPlaces));
 }
