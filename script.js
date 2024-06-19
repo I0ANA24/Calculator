@@ -45,7 +45,7 @@ function handleDigit(target) {
 function handleOperator(target) {
     let newOperator = target.textContent;
 
-    if(newOperator === '=') {
+    if(newOperator === '=' && secondOperand) {
         switch(operator) {
             case '+': 
                 result = Number(firstOperand) + Number(secondOperand);
@@ -53,6 +53,7 @@ function handleOperator(target) {
                 displayDown.textContent = result;
                 operator = newOperator;
                 firstOperand = '';
+                secondOperand = '';
                 break;
             case '-': 
                 result = Number(firstOperand) - Number(secondOperand);
@@ -60,6 +61,7 @@ function handleOperator(target) {
                 displayDown.textContent = result;
                 operator = newOperator;
                 firstOperand = '';
+                secondOperand = '';
                 break;
             case 'x':
                 result = Number(firstOperand) * Number(secondOperand);
@@ -67,6 +69,7 @@ function handleOperator(target) {
                 displayDown.textContent = result;
                 operator = newOperator;
                 firstOperand = '';
+                secondOperand = '';
                 break;
             case '/':
                 result = Number(firstOperand) / Number(secondOperand);
@@ -75,6 +78,7 @@ function handleOperator(target) {
                 displayDown.textContent = result;
                 operator = newOperator;
                 firstOperand = '';
+                secondOperand = '';
                 break;
         }
     } else if(newOperator === '+') {
