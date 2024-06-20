@@ -264,7 +264,48 @@ function roundToDecimalPlace(number, decimalPlaces) {
     return Number(number.toFixed(decimalPlaces));
 }
 
+function clearButton() {
+    let findOperator = 0;
+    let findFirstOperand = 0;
+    let findSecondOperand = 0;
+    let findEqual = 0;
+    let findResult = 0;
+    for(let i = 0; i < displayUp.textContent.length; i++) {
+        let char = displayUp.textContent[i];
+        if(!isNaN(char))
+            findFirstOperand = 1;
+        if(['+', '-', 'x', '/', '^'].includes(char) && findFirstOperand)
+            findOperator = char;
+        if(!isNaN(char) && findOperator)
+            findSecondOperand = 1;
+        if(char === '=') {
+            findEqual = 1;
+        }
+        if((!isNaN(char) || ['+', '-'].includes(char)) && findEqual) {
+            findResult = 1;
+        }
+    }
+
+    displayUp.textContent = displayUp.textContent.slice(0, -1);
+    if(findResult) {
+        result = result.toString().slice(0, -1);
+        result = parseFloat(result);
+        displayDown.textContent = displayDown.textContent.slice(0, -1);
+    } else if(findEqual) {
+        operator = findOperator;
+    } else if(findSecondOperand) {
+        secondOperand = secondOperand.slice(0, -1);
+        displayDown.textContent = displayDown.textContent.slice(0, -1);
+    } else if(findOperator) {
+        operator = '';
+    } else if(findFirstOperand) {
+        firstOperand = firstOperand.slice(0, -1);
+        displayDown.textContent = displayDown.textContent.slice(0, -1);
+    }
+}
+
 function allClearButton() {
+    clearButton();
     result = '';
     firstOperand = '';
     secondOperand = '';
