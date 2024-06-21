@@ -257,6 +257,120 @@ function handleOperator(target) {
                 operator = newOperator;
                 break;
         }
+    } else if(newOperator === '+/-') {
+        let ok = 1;
+        for(let i = displayUp.textContent.length - 1; i >= 1 && ok === 1; i--)
+            if(isNaN(displayUp.textContent[i]))
+                ok = 0;
+        
+        if(ok) {
+            if(firstOperand > 0) {
+                displayUp.textContent = '-' + displayUp.textContent;
+                firstOperand = -firstOperand;
+                displayDown.textContent = '-' + displayDown.textContent;
+            } else if(firstOperand < 0) {
+                displayUp.textContent = displayUp.textContent.slice(1);
+                firstOperand = -firstOperand;
+                displayDown.textContent = displayDown.textContent.slice(1);
+            }
+        }
+
+        switch(operator) {
+            case '=':
+                if(!isNaN(displayUp.textContent[displayUp.textContent.length - 1])) {
+                    if(result > 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '=')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + '-' + displayUp.textContent.slice(position);
+                        result = -result;
+                        displayDown.textContent = '-' + displayDown.textContent;
+                    } else if(result < 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '=')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + displayUp.textContent.slice(position + 1);
+                        result = -result;
+                        displayDown.textContent = displayDown.textContent.slice(1);
+                    }
+                }
+                break;
+            case '+':
+                if(!isNaN(displayUp.textContent[displayUp.textContent.length - 1])) {
+                    if(secondOperand > 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '+')
+                                position = i;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + '-' + displayUp.textContent.slice(position + 1);
+                        operator = '-';
+                    }
+                }
+                break;
+            case '-':
+                if(!isNaN(displayUp.textContent[displayUp.textContent.length - 1])) {
+                    if(secondOperand > 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '-')
+                                position = i;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + '+' + displayUp.textContent.slice(position + 1);
+                        operator = '+';
+                    }
+                }
+                break;
+            case '/':
+                if(!isNaN(displayUp.textContent[displayUp.textContent.length - 1]) || displayUp.textContent[displayUp.textContent.length - 1] === ')') {
+                    if(secondOperand > 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '/')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + '(-' + displayUp.textContent.slice(position) + ')';
+                        secondOperand = -secondOperand;
+                        displayDown.textContent = '-' + displayDown.textContent;
+                    } else if(secondOperand < 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '/')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + displayUp.textContent.slice(position + 2, -1);
+                        secondOperand = -secondOperand;
+                        displayDown.textContent = displayDown.textContent.slice(1);
+                    }
+                }
+                break;
+            case 'x':
+                if(!isNaN(displayUp.textContent[displayUp.textContent.length - 1]) || displayUp.textContent[displayUp.textContent.length - 1] === ')') {
+                    if(secondOperand > 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '*')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + '(-' + displayUp.textContent.slice(position) + ')';
+                        secondOperand = -secondOperand;
+                        displayDown.textContent = '-' + displayDown.textContent;
+                    } else if(secondOperand < 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '*')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + displayUp.textContent.slice(position + 2, -1);
+                        secondOperand = -secondOperand;
+                        displayDown.textContent = displayDown.textContent.slice(1);
+                    }
+                }
+                break;
+        }
+
     }
 }
 
@@ -305,7 +419,6 @@ function clearButton() {
 }
 
 function allClearButton() {
-    clearButton();
     result = '';
     firstOperand = '';
     secondOperand = '';
