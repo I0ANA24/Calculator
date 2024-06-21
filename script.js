@@ -80,6 +80,15 @@ function handleOperator(target) {
                 firstOperand = '';
                 secondOperand = '';
                 break;
+            case 'xn':
+                result = Number(firstOperand) ** Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
+                displayUp.textContent += '=' + result;
+                displayDown.textContent = result;
+                operator = newOperator;
+                firstOperand = '';
+                secondOperand = '';
+                break;
         }
     } else if(newOperator === '+') {
         switch(operator) {
@@ -122,6 +131,14 @@ function handleOperator(target) {
                 firstOperand = result;
                 secondOperand = '';
                 displayUp.textContent = firstOperand + '+';
+                operator = newOperator;
+                break;
+            case 'xn':
+                result = Number(firstOperand) ** Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
                 operator = newOperator;
                 break;
         }
@@ -168,6 +185,14 @@ function handleOperator(target) {
                 displayUp.textContent = firstOperand + '-';
                 operator = newOperator;
                 break;
+            case 'xn':
+                result = Number(firstOperand) ** Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
         }
     }  else if(newOperator === 'x') {
         switch(operator) {
@@ -212,6 +237,14 @@ function handleOperator(target) {
                 displayUp.textContent = firstOperand + '*';
                 operator = newOperator;
                 break;
+            case 'xn':
+                result = Number(firstOperand) ** Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
         }
     } else if(newOperator === '/') {
         switch(operator) {
@@ -254,6 +287,14 @@ function handleOperator(target) {
                 firstOperand = result;
                 secondOperand = '';
                 displayUp.textContent = firstOperand + '/';
+                operator = newOperator;
+                break;
+            case 'xn':
+                result = Number(firstOperand) ** Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
                 operator = newOperator;
                 break;
         }
@@ -369,13 +410,84 @@ function handleOperator(target) {
                     }
                 }
                 break;
+            case 'xn':
+                if(!isNaN(displayUp.textContent[displayUp.textContent.length - 1]) || displayUp.textContent[displayUp.textContent.length - 1] === ')') {
+                    if(secondOperand > 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '^')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + '(-' + displayUp.textContent.slice(position) + ')';
+                        secondOperand = -secondOperand;
+                        displayDown.textContent = '-' + displayDown.textContent;
+                    } else if(secondOperand < 0) {
+                        let position = -1;
+                        for(let i = displayUp.textContent.length - 1; i >= 0 && position === -1; i--)
+                            if(displayUp.textContent[i] === '*')
+                                position = i;
+                        position++;
+                        displayUp.textContent = displayUp.textContent.slice(0, position) + displayUp.textContent.slice(position + 2, -1);
+                        secondOperand = -secondOperand;
+                        displayDown.textContent = displayDown.textContent.slice(1);
+                    }
+                }
+                break;
         }
 
+    }  else if(newOperator === 'xn') {
+        switch(operator) {
+            case '':
+                if(firstOperand && secondOperand === '') {
+                    displayUp.textContent += '^';
+                    operator = newOperator;
+                }
+                break;
+            case '=':
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
+            case '+':
+                result = Number(firstOperand) + Number(secondOperand);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
+            case '-':
+                result = Number(firstOperand) - Number(secondOperand);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
+            case '/':
+                result = Number(firstOperand) / Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
+            case 'x':
+                result = Number(firstOperand) * Number(secondOperand);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
+            case 'xn':
+                result = Number(firstOperand) ** Number(secondOperand);
+                result = roundToDecimalPlace(result, 3);
+                firstOperand = result;
+                secondOperand = '';
+                displayUp.textContent = firstOperand + '^';
+                operator = newOperator;
+                break;
+        }
     }
-}
-
-function roundToDecimalPlace(number, decimalPlaces) {
-    return Number(number.toFixed(decimalPlaces));
 }
 
 function clearButton() {
@@ -425,4 +537,8 @@ function allClearButton() {
     operator = '';
     displayDown.textContent = '';
     displayUp.textContent = '';
+}
+
+function roundToDecimalPlace(number, decimalPlaces) {
+    return Number(number.toFixed(decimalPlaces));
 }
